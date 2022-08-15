@@ -8,6 +8,7 @@ SBIT(LED, 0x90, 6);
 
 typedef const unsigned char __code *PUINT8C;
 
+__code unsigned char BinaryLabel[] = {'P', 'R', 'I', 'N', 'T', ' ', '1', ',', '1', '\n', 0};
 __code unsigned char GetDeviceDescriptorRequest[] = {USB_REQ_TYP_IN, USB_GET_DESCRIPTOR, 0, USB_DESCR_TYP_DEVICE, 0, 0, sizeof(USB_DEV_DESCR), 0};
 __code unsigned char GetConfigurationDescriptorRequest[] = {USB_REQ_TYP_IN, USB_GET_DESCRIPTOR, 0, USB_DESCR_TYP_CONFIG, 0, 0, sizeof(USB_DEV_DESCR), 0};
 __code unsigned char GetInterfaceDescriptorRequest[] = {USB_REQ_TYP_IN | USB_REQ_RECIP_INTERF, USB_GET_DESCRIPTOR, 0, USB_DESCR_TYP_INTERF, 0, 0, sizeof(USB_ITF_DESCR), 0};
@@ -286,6 +287,20 @@ void fillTxBuffer(PUINT8C data, unsigned char len) {
     for (i = 0; i < len; i++)
         TxBuffer[i] = data[i];
     DEBUG_OUT("fillTxBuffer done\n", len);
+}
+
+unsigned char printLabel() {
+    unsigned char s;
+    fillTxBuffer(BinaryLabel, sizeof(BinaryLabel));
+    UH_TX_LEN = sizeof(BinaryLabel);
+    s = hostTransfer(USB_PID_OUT << 4 | 0x02, bUH_R_TOG, 10000);
+    if (s == ERR_SUCCESS) {
+        sendProtocolMSG(0xFA, 0, 0x00, 0x00, 0x00, 0x88);
+    }
+
+    if (s != ERR_SUCCESS) {
+        sendProtocolMSG(0xFB, 0, 0x00, 0x00, 0x00, 0x99);
+    }
 }
 
 unsigned char getDeviceDescriptor() {

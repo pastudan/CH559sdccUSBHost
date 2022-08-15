@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    ".dockerignore": "dockerfile",
+    "ch559.h": "c",
+    "util.h": "c",
+    "stdint.h": "c",
+    "cstdint": "cpp",
+    "stdio.h": "c",
+    "string.h": "c",
+    "uart.h": "c",
+    "usbhost.h": "c"
+  }
+}

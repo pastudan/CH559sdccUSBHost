@@ -5,6 +5,7 @@
 #include "CH559.h"
 #include "util.h"
 #include "uart.h"
+#include "USBHost.h"
 
 uint8_t __xdata uartRxBuff[64];
 uint8_t __xdata rxPos = 0;
@@ -23,6 +24,7 @@ void processUart() {
                 // if(uartRxBuff[1]==0x73)LED=1;
                 if (uartRxBuff[1] == 'b') runBootloader();
             }
+            if (uartRxBuff[1] == 'p') printLabel();
             rxPos = 0;
         } else {
             rxPos++;

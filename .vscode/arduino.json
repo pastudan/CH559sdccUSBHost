@@ -1,0 +1,7 @@
+{
+    "port": "COM6",
+    "configuration": "CDCOnBoot=default,PartitionScheme=default,CPUFreq=160,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=512000,DebugLevel=none",
+    "board": "esp32:esp32:esp32c3",
+    "programmer": "esp32:esptool",
+    "sketch": "USBhostDisplayDemo\\USBhostDisplayDemo.ino"
+}
